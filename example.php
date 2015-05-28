@@ -47,7 +47,7 @@ $result = $intime->getDepartmentCode('Ивано-Франковск', 'ул. Ш�
 // Получение стоимости доставки
 // $result = $intime->calculateTtn();
 // Получение справочника списка населённых пунктов (List of settlements)
-// $result = $intime->getCatalog('List of settlements');
+// $result = $intime->catalogList('List of settlements');
 // Получение справочника TTN
 // $result = $intime->getCatalog('TTN');
 // Получение срока доставки

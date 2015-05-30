@@ -9,7 +9,7 @@ set_time_limit(90);
 require_once './src/IntimeApi.php';
 
 // В конструктор передаются id и ключ, полученние после регистрации на сайте http://www.intime.ua/register/
-$intime = new intime('', '');
+$intime = new IntimeApi('', '');
 // Область отправителя
 $intime->senderRegion = 'Донецкая область';
 // Город отправителя

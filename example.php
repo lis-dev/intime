@@ -1,7 +1,13 @@
 <?
+// Отображаем все ошибки
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Сервер интайма работает медленно для некоторых функций, потому есть необходимость выставить time limit > 60
 set_time_limit(90);
+
 require_once './src/IntimeApi.php';
+
 // В конструктор передаются id и ключ, полученние после регистрации на сайте http://www.intime.ua/register/
 $intime = new IntimeApi('', '');
 // Область отправителя
@@ -12,6 +18,10 @@ $intime->senderCity = 'Донецк';
 $intime->senderAddress = 'ул. Сеченова, 31';
 // Телефон отправителя
 $intime->senderPhone = '+380970000000';
+// Код склада отправителя
+$intime->senderWarehouseCode = '0501';
+
+
 // Область получателя
 $intime->receiverRegion = 'Киевская область';
 // Город получателя
@@ -22,6 +32,9 @@ $intime->receiverAddress = 'пер. Моторный, 9';
 $intime->receiverPhone = '+380630000000';
 // ФИО получателя
 $intime->receiverClient = 'Тестовый получатель';
+// Код склада получателя
+$intime->receiverWarehouseCode = '1141';
+
 // Описание посылки
 $intime->cargoDescription = 'Куча личных вещей';
 // Кол-во мест посылки
@@ -32,6 +45,9 @@ $intime->weight = 32;
 $intime->volume = 0.17;
 // Спунтиковое оборудование
 $intime->cargoType = '00101';
+// Дата отправки (для расчета сроков доставки)
+// $intime->dispatchDate = '2015-06-10+03:00';
+
 // Заявленная стоимость посылки
 $intime->insuranceCost = 200;
 // Сумма для наложенного платежа, если необходимо (если указана, то поле insurance_cost игнорируется)
@@ -41,15 +57,18 @@ if ($intime->podAmount) {
 	$intime->podPaymentType = 'POL';
 }
 // Получение кода склада (отделения) по городу и адресу
-$result = $intime->getDepartmentCode('Ивано-Франковск', 'ул. Шопена, 9/2');
+//$result = $intime->getDepartmentCode('Ивано-Франковск', 'ул. Шопена, 9/2');
 // Получение кода населенного пункта по его названию и области
 // $result = $intime->getSettlementCode('Раздольное', 'АР Крым');
 // Получение стоимости доставки
-// $result = $intime->calculateTtn();
+$result = $intime->calculateTtn();
 // Получение справочника списка населённых пунктов (List of settlements)
-// $result = $intime->getCatalog('List of settlements');
+// $result = $intime->catalogList('List of settlements');
+// Получение справочника списка представительств (Departments)
+// $result = $intime->catalogList('Departments');
+
 // Получение справочника TTN
-// $result = $intime->getCatalog('TTN');
+// $result = $intime->catalogList('TTN');
 // Получение срока доставки
 // $intime->dispatchDate = date('Y-m-d+03:00');
 // $result = $intime->deliveryDay();
